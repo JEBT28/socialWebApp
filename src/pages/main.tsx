@@ -4,7 +4,7 @@ import {TabBar} from "../components/tabbar";
 export const Main = ()=> {
 
     return (
-        <div>
+        <div className={"bg-slate-100"}>
             <Header/>
             <Outlet />
             <TabBar/>

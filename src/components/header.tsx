@@ -16,7 +16,7 @@ export const Header = () => {
         isActive ? "activeNavLink" : "navLink"
 
     return (
-        <header className={"grid grid-cols-4 gap-4 place-items-center py-4 px-2 border-b-2 border-b-slate-200"}>
+        <header className={"grid grid-cols-4 gap-4 place-items-center bg-white py-4 px-2 border-b-2 border-b-slate-200"}>
             <div><h1 className={"text-2xl font-semibold text-blue-700"}>Social</h1></div>
             <div
                 className={"navbar"}>
