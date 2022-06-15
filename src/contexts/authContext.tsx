@@ -1,7 +1,8 @@
 import {createContext, useContext, useEffect, useState} from "react";
-import {Navigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 import {useAuth} from "../hooks/useAuth";
 import {AuthService} from "../services/authService";
+import {handledUnauthorized} from "../helpers/handledUnauthorized";
 
 interface AuthInterface {
     isAuthenticated: boolean;
@@ -21,6 +22,7 @@ export const authContext = createContext<AuthContextType>(null!);
 
 const AuthProvider = ({children}: any) => {
     const authService = new AuthService()
+    const navigate = useNavigate()
     let [auth, setAuth] = useState<AuthInterface>({isAuthenticated: false});
 
     const token = localStorage.getItem("token") || ""
@@ -30,11 +32,15 @@ const AuthProvider = ({children}: any) => {
             authService.renew().subscribe({
                     next: (value: any) => {
                         if (value.ok) {
+                            localStorage.setItem("token", value.results.token)
+                            localStorage.setItem("username", value.results.usuario)
                             setAuth({isAuthenticated: true, username: value.results.usuario, token: value.results.token})
                         }
                     },
                     error: err => {
-                        return <Navigate to={"/auth"}/>
+                        console.log("Error auth", err)
+                        localStorage.removeItem("token")
+                        setAuth({isAuthenticated: false})
                     }
                 }
             )

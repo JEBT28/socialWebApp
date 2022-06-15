@@ -24,6 +24,7 @@ export const AuthPage = () => {
                     next: (value: any) => {
                         if (value.ok) {
                             localStorage.setItem("token", value.results.token)
+                            localStorage.setItem("username", value.results.usuario)
                             navigate("/home")
                         }
                     },
